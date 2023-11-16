@@ -18,21 +18,20 @@ public class LibraryController {
         int menu;
         do {
             menu = InputView.readMenu();
-            switch(menu) {
-                case 1:
-                    useSeat(libraryService);
-                    break;
-                case 2:
-                    changeSeat(libraryService);
-                    break;
-                case 3:
-                    returnSeat(libraryService);
-                    break;
-                case 4:
-                    logout();
-                    break;
+            try {
+                switch (menu) {
+                    case 1 -> useSeat(libraryService);
+                    case 2 -> {
+                        user.getSeat();
+                        changeSeat(libraryService);
+                    }
+                    case 3 -> returnSeat(libraryService);
+                    case 4 -> logout();
+                }
+            } catch (Exception exception) {
+                System.out.println(exception.getMessage());
             }
-        } while(menu != 4);
+        } while (menu != 4);
     }
 
     private void useSeat(LibraryService libraryService) {
