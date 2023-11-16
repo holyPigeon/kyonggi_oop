@@ -24,6 +24,7 @@ public class LibraryService {
 
     public Seat returnSeat() {
         Seat usedSeat = user.returnSeat();
+        usedSeat.setAvailable(true);
 
         return usedSeat;
     }
