@@ -7,11 +7,14 @@ import java.util.Optional;
 public class User {
 
     private String studentId;
+    private String password;
     private Optional<Seat> seat;
 
-    public User(String studentId) {
+    public User(String studentId, String password) {
         this.studentId = studentId;
+        this.password = password;
         this.seat = Optional.empty();
+
     }
 
     public Seat returnSeat() {
@@ -27,6 +30,10 @@ public class User {
 
     public String getStudentId() {
         return studentId;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public Seat getSeat() {

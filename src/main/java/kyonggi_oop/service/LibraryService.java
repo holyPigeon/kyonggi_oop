@@ -12,8 +12,8 @@ public class LibraryService {
     SeatManager seatManager;
     User user;
 
-    public LibraryService(User user) {
-        seatManager = new SeatManager();
+    public LibraryService(User user, List<Seat> seats) {
+        seatManager = new SeatManager(seats);
         this.user = user;
     }
 

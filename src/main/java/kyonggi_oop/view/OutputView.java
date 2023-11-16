@@ -10,6 +10,14 @@ public class OutputView {
 
     }
 
+    public static void printLoginSuccessMessage() {
+        System.out.println("로그인에 성공하였습니다.");
+    }
+
+    public static void printLoginFailMessage() {
+        System.out.println("로그인에 실패하였습니다.");
+    }
+
     public static void printUseSeatMessage(List<Seat> seats) {
         System.out.println("1. 좌석 이용을 선택합니다.");
         System.out.println("이용하고자 하는 좌석 번호를 입력해주세요.");

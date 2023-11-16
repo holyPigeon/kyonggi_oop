@@ -1,38 +1,53 @@
 package kyonggi_oop.controller;
 
+import kyonggi_oop.domain.user.UserManager;
 import kyonggi_oop.service.LibraryService;
 import kyonggi_oop.domain.seat.Seat;
 import kyonggi_oop.domain.user.User;
+import kyonggi_oop.service.LoginService;
 import kyonggi_oop.view.InputView;
 import kyonggi_oop.view.OutputView;
+
+import java.util.List;
 
 public class LibraryController {
 
     public void run() {
 
-        // 로그인 진행 후 학번 입력값 받음
-        String studentId = "202301234";
-        User user = new User("202301234");
-        LibraryService libraryService = new LibraryService(user);
+        UserManager userManager = new UserManager(InputView.readUsers());
+        LoginService loginService = new LoginService(userManager);
+        List<Seat> seats = InputView.readSeats();
+
+        // 로그인
+        User user;
+        do {
+            user = InputView.readStudentIdAndPassword();
+            if (loginService.isRegisteredUser(user)) {
+                    OutputView.printLoginSuccessMessage();
+                    break;
+            }
+            OutputView.printLoginFailMessage();
+        } while(!loginService.isRegisteredUser(user));
+
+        LibraryService libraryService = new LibraryService(user, seats);
 
         int menu;
         do {
             menu = InputView.readMenu();
-            switch(menu) {
-                case 1:
-                    useSeat(libraryService);
-                    break;
-                case 2:
-                    changeSeat(libraryService);
-                    break;
-                case 3:
-                    returnSeat(libraryService);
-                    break;
-                case 4:
-                    logout();
-                    break;
+            try {
+                switch (menu) {
+                    case 1 -> useSeat(libraryService);
+                    case 2 -> {
+                        user.getSeat();
+                        changeSeat(libraryService);
+                    }
+                    case 3 -> returnSeat(libraryService);
+                    case 4 -> logout();
+                }
+            } catch (Exception exception) {
+                System.out.println(exception.getMessage());
             }
-        } while(menu != 4);
+        } while (menu != 4);
     }
 
     private void useSeat(LibraryService libraryService) {
