@@ -4,6 +4,7 @@ import kyonggi_oop.domain.seat.RoomType;
 import kyonggi_oop.domain.seat.Seat;
 import kyonggi_oop.domain.user.User;
 
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -50,6 +51,7 @@ public class InputView {
         System.out.println("학번과 비밀번호를 입력해주세요. (e.g. 202301234,abc123)");
         String input = scanner.next();
         String[] split = input.split(",");
+
         return new User(split[0], split[1]);
     }
 
