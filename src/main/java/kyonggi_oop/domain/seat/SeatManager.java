@@ -1,6 +1,5 @@
 package kyonggi_oop.domain.seat;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SeatManager {

@@ -1,7 +1,5 @@
 package kyonggi_oop.domain.seat;
 
-import kyonggi_oop.domain.seat.RoomType;
-
 public class Seat {
 
     private int number;

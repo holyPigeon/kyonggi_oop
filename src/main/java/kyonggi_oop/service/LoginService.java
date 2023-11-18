@@ -3,7 +3,6 @@ package kyonggi_oop.service;
 import kyonggi_oop.domain.user.User;
 import kyonggi_oop.domain.user.UserManager;
 
-import java.util.Scanner;
 import java.util.function.Predicate;
 
 public class LoginService {
