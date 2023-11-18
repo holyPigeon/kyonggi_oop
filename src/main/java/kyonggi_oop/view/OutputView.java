@@ -32,7 +32,9 @@ public class OutputView {
     private static void printAvailableSeatsMessage(List<Seat> seats) {
         System.out.println();
         System.out.println("<이용 가능한 좌석 정보>");
-        seats.forEach(seat -> System.out.println("위치: " + seat.getRoomType().getName() + " / 번호: " + seat.getNumber()));
+        seats.forEach(seat ->
+                System.out.println("위치: " + seat.getRoomType().getName() + " / 번호: " + seat.getNumber())
+        );
     }
 
     public static void printChangeSeatMessage(List<Seat> seats) {
@@ -41,9 +43,9 @@ public class OutputView {
         printAvailableSeatsMessage(seats);
     }
 
-    public static void printSeatChangedMessage(int usedSeatNumber, int changeSeatNumber) {
+    public static void printSeatChangedMessage(int changeSeatNumber) {
         System.out.println();
-        System.out.println(usedSeatNumber + "번 좌석에서 " + changeSeatNumber + "번 좌석으로 이동하였습니다." );
+        System.out.println(changeSeatNumber + "번 좌석으로 이동하였습니다." );
     }
 
     public static void printReturnSeatMessage() {

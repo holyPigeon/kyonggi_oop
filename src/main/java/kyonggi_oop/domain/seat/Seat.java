@@ -4,7 +4,6 @@ public class Seat {
 
     private final int number;
     private boolean isAvailable;
-
     private final RoomType roomType;
 
     public Seat(int number, RoomType roomType) {

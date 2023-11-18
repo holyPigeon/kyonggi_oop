@@ -3,6 +3,8 @@ package kyonggi_oop.view;
 import kyonggi_oop.domain.seat.RoomType;
 import kyonggi_oop.domain.seat.Seat;
 import kyonggi_oop.domain.user.User;
+import kyonggi_oop.dto.request.UserRequest;
+import kyonggi_oop.dto.response.UserStatusResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,24 +42,27 @@ public class InputView {
             String[] parts = line.split(",");
             String studentId = parts[0].trim();
             String password = parts[1].trim();
-            users.add(new User(studentId, password));
+            UserRequest userRequest = UserRequest.of(studentId, password);
+            users.add(new User(userRequest));
         }
 
         return users;
     }
 
-    public static User readStudentIdAndPassword() {
+    public static UserRequest readStudentIdAndPassword() {
         System.out.println("학번과 비밀번호를 입력해주세요. (e.g. 202301234,abc123)");
         String input = scanner.next();
         String[] split = input.split(",");
-        return new User(split[0], split[1]);
+        return UserRequest.of(split[0], split[1]);
     }
 
-    public static int readMenu() {
+    public static int readMenu(UserStatusResponse userStatusResponse) {
         System.out.println();
         System.out.println("<메뉴>");
         System.out.println("메뉴를 선택하세요.");
         System.out.println("1. 좌석 이용   2.좌석 이동   3.좌석 반납   4.로그아웃");
+        System.out.println("현재 " + userStatusResponse.getStudentId() + " 사용자가 " +
+                userStatusResponse.getSeatNumber() + " 번 좌석 이용중입니다.");
 
         return Integer.parseInt(scanner.next());
     }
