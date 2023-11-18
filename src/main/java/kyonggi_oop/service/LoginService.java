@@ -1,24 +1,32 @@
 package kyonggi_oop.service;
 
 import kyonggi_oop.domain.user.User;
-import kyonggi_oop.domain.user.UserManager;
+import kyonggi_oop.repository.user.UserRepository;
 
 import java.util.function.Predicate;
 
 public class LoginService {
-    UserManager userManager;
+    UserRepository userRepository;
 
-    public LoginService(UserManager userManager) {
-        this.userManager = userManager;
+    public LoginService(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     public boolean isRegisteredUser(User user) {
-        return userManager.getUsers()
+        return userRepository.getUsers()
                 .stream()
                 .anyMatch(isStudentIdAndPasswordAllMatch(user));
     }
 
     private static Predicate<User> isStudentIdAndPasswordAllMatch(User user) {
-        return savedUser -> savedUser.getStudentId().equals(user.getStudentId()) && savedUser.getPassword().equals(user.getPassword());
+        return savedUser -> isStudentIdMatch(user, savedUser) && isPasswordMatch(user, savedUser);
+    }
+
+    private static boolean isPasswordMatch(User user, User savedUser) {
+        return savedUser.getPassword().equals(user.getPassword());
+    }
+
+    private static boolean isStudentIdMatch(User user, User savedUser) {
+        return savedUser.getStudentId().equals(user.getStudentId());
     }
 }

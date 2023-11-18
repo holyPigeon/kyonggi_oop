@@ -1,12 +1,14 @@
-package kyonggi_oop.domain.seat;
+package kyonggi_oop.repository.seat;
+
+import kyonggi_oop.domain.seat.Seat;
 
 import java.util.List;
 
-public class SeatManager {
+public class SeatRepository {
 
     private List<Seat> seats;
 
-    public SeatManager(List<Seat> seats) {
+    public SeatRepository(List<Seat> seats) {
         this.seats = seats;
     }
 

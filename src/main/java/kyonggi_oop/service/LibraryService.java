@@ -1,25 +1,24 @@
 package kyonggi_oop.service;
 
 import kyonggi_oop.domain.seat.Seat;
-import kyonggi_oop.domain.seat.SeatManager;
+import kyonggi_oop.repository.seat.SeatRepository;
 import kyonggi_oop.domain.user.User;
 
 import java.util.List;
-import java.util.Optional;
 
 public class LibraryService {
 
-    SeatManager seatManager;
+    SeatRepository seatRepository;
     User user;
 
     public LibraryService(User user, List<Seat> seats) {
-        seatManager = new SeatManager(seats);
+        seatRepository = new SeatRepository(seats);
         this.user = user;
     }
 
     public void useSeat(Seat seat) {
         seat.setAvailable(false);
-        user.setSeat(seat);
+        user.useSeat(seat);
     }
 
     public Seat returnSeat() {
@@ -31,7 +30,7 @@ public class LibraryService {
 
     public Seat changeSeat(Seat seat) {
         Seat usedSeat = user.getSeat();
-        user.setSeat(seat);
+        user.useSeat(seat);
         seat.setAvailable(false);
         usedSeat.setAvailable(true);
 
@@ -39,10 +38,10 @@ public class LibraryService {
     }
 
     public Seat findSeatBySeatNumber(int seatNumber) {
-        return seatManager.findBySeatNumber(seatNumber);
+        return seatRepository.findBySeatNumber(seatNumber);
     }
 
     public List<Seat> findAvailableSeats() {
-        return seatManager.findAvailableSeats();
+        return seatRepository.findAvailableSeats();
     }
 }

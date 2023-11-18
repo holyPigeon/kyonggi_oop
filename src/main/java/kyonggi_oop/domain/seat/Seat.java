@@ -2,10 +2,10 @@ package kyonggi_oop.domain.seat;
 
 public class Seat {
 
-    private int number;
+    private final int number;
     private boolean isAvailable;
 
-    private RoomType roomType;
+    private final RoomType roomType;
 
     public Seat(int number, RoomType roomType) {
         this.number = number;

@@ -1,6 +1,6 @@
 package kyonggi_oop.controller;
 
-import kyonggi_oop.domain.user.UserManager;
+import kyonggi_oop.repository.user.UserRepository;
 import kyonggi_oop.service.LibraryService;
 import kyonggi_oop.domain.seat.Seat;
 import kyonggi_oop.domain.user.User;
@@ -14,8 +14,8 @@ public class LibraryController {
 
     public void run() {
 
-        UserManager userManager = new UserManager(InputView.readUsers());
-        LoginService loginService = new LoginService(userManager);
+        UserRepository userRepository = new UserRepository(InputView.readUsers());
+        LoginService loginService = new LoginService(userRepository);
         List<Seat> seats = InputView.readSeats();
 
         // 로그인

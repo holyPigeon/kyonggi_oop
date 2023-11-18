@@ -1,12 +1,14 @@
-package kyonggi_oop.domain.user;
+package kyonggi_oop.repository.user;
+
+import kyonggi_oop.domain.user.User;
 
 import java.util.List;
 
-public class UserManager {
+public class UserRepository {
 
     private final List<User> users;
 
-    public UserManager(List<User> users) {
+    public UserRepository(List<User> users) {
         this.users = users;
     }
 
