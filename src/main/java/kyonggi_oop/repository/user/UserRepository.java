@@ -8,8 +8,12 @@ public class UserRepository {
 
     private final List<User> users;
 
-    public UserRepository(List<User> users) {
+    private UserRepository(List<User> users) {
         this.users = users;
+    }
+
+    public static UserRepository create(List<User> users) {
+        return new UserRepository(users);
     }
 
     public void add(User user) {

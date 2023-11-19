@@ -2,14 +2,19 @@ package kyonggi_oop.repository.seat;
 
 import kyonggi_oop.domain.seat.Seat;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SeatRepository {
 
     private List<Seat> seats;
 
-    public SeatRepository(List<Seat> seats) {
-        this.seats = seats;
+    private SeatRepository(List<Seat> seats) {
+        this.seats = new ArrayList<>(seats);
+    }
+
+    public static SeatRepository create(List<Seat> seats) {
+        return new SeatRepository(seats);
     }
 
     // 데이터 직접 입력을 위한 임시 주석
@@ -45,6 +50,6 @@ public class SeatRepository {
     }
 
     public List<Seat> getSeats() {
-        return seats;
+        return new ArrayList<>(seats);
     }
 }

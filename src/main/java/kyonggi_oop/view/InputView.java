@@ -27,7 +27,7 @@ public class InputView {
             String[] parts = line.split(",");
             int roomNumber = Integer.parseInt(parts[1]);
             RoomType roomType = RoomType.findByName(parts[0]);
-            seats.add(new Seat(roomNumber, roomType));
+            seats.add(Seat.create(roomNumber, roomType));
         }
 
         return seats;

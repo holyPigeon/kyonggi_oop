@@ -14,8 +14,12 @@ public class LibraryService {
     User user;
     SeatUsage seatUsage;
 
-    public LibraryService(SeatRepository seatRepository) {
+    private LibraryService(SeatRepository seatRepository) {
         this.seatRepository = seatRepository;
+    }
+
+    public static LibraryService create(SeatRepository seatRepository) {
+        return new LibraryService(seatRepository);
     }
 
     public UserStatusResponse getUserStatusResponse() {

@@ -12,6 +12,10 @@ public class User {
         this.password = userRequest.getPassword();
     }
 
+    public static User create(UserRequest userRequest) {
+        return new User(userRequest);
+    }
+
     public String getStudentId() {
         return studentId;
     }

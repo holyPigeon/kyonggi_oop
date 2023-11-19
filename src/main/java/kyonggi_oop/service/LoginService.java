@@ -14,6 +14,10 @@ public class LoginService {
         this.userRepository = userRepository;
     }
 
+    public static LoginService create(UserRepository userRepository) {
+        return new LoginService(userRepository);
+    }
+
     public User tryLogin(UserRequest userRequest) {
         User user;
 

@@ -13,8 +13,8 @@ public class LibraryController {
 
     public void run() {
 
-        SeatRepository seatRepository = new SeatRepository(InputView.readSeats());
-        LibraryService libraryService = new LibraryService(seatRepository);
+        SeatRepository seatRepository = SeatRepository.create(InputView.readSeats());
+        LibraryService libraryService = LibraryService.create(seatRepository);
         libraryService.login(tryLogin());
 
         int menu;
@@ -43,7 +43,7 @@ public class LibraryController {
     }
 
     private static LoginService prepareLoginService() {
-        UserRepository userRepository = new UserRepository(InputView.readUsers());
+        UserRepository userRepository = UserRepository.create(InputView.readUsers());
         return new LoginService(userRepository);
     }
 
