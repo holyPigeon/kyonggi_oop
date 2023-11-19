@@ -9,9 +9,10 @@ import kyonggi_oop.view.OutputView;
 
 public class LibraryController {
 
+    LibraryService libraryService = LibraryService.getInstance();
+
     public void run() {
 
-        LibraryService libraryService = LibraryService.create();
         libraryService.login(tryLogin());
 
         int menu;

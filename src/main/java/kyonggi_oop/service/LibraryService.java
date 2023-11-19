@@ -10,6 +10,7 @@ import java.util.List;
 
 public class LibraryService {
 
+    private static final LibraryService instance = new LibraryService();
     private final SeatRepository seatRepository = SeatRepository.getInstance();
     private User user;
     private SeatUsage seatUsage;
@@ -18,8 +19,8 @@ public class LibraryService {
 
     }
 
-    public static LibraryService create() {
-        return new LibraryService();
+    public static LibraryService getInstance() {
+        return instance;
     }
 
     public UserStatusResponse getUserStatusResponse() {
