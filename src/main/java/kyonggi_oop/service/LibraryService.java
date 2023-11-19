@@ -32,7 +32,7 @@ public class LibraryService {
 
     public void useSeat(Seat seat) {
         if (!seat.isAvailable()) {
-            throw new IllegalStateException("이미 사용중인 좌석입니다.");
+            throw new IllegalStateException("이미 이용중인 좌석입니다.");
         }
         this.seatUsage = SeatUsage.create(user, seat);
         seatRepository.updateSeatIsAvailable(seat, false);
@@ -40,7 +40,7 @@ public class LibraryService {
 
     public void returnSeat() {
         if (!isUsingSeat()) {
-            throw new IllegalStateException("사용자가 좌석을 사용하고 있지 않습니다.");
+            throw new IllegalStateException("사용자가 좌석을 이용하고 있지 않습니다.");
         }
         seatRepository.updateSeatIsAvailable(getCurrentSeat(), true);
         this.seatUsage = null;
@@ -49,10 +49,10 @@ public class LibraryService {
 
     public void changeSeat(Seat seat) {
         if (!isUsingSeat()) {
-            throw new IllegalStateException("사용자가 좌석을 사용하고 있지 않습니다.");
+            throw new IllegalStateException("사용자가 좌석을 이용하고 있지 않습니다.");
         }
         if (!seat.isAvailable()) {
-            throw new IllegalStateException("이미 사용중인 좌석입니다.");
+            throw new IllegalStateException("이미 이용중인 좌석입니다.");
         }
         seatRepository.updateSeatIsAvailable(getCurrentSeat(), true);
         this.seatUsage = SeatUsage.create(user, seat);
@@ -61,7 +61,7 @@ public class LibraryService {
 
     public Seat getCurrentSeat() {
         if (!isUsingSeat()) {
-            throw new IllegalStateException("사용자가 좌석을 사용하고 있지 않습니다.");
+            throw new IllegalStateException("사용자가 좌석을 이용하고 있지 않습니다.");
         }
         return seatUsage.getSeat();
     }

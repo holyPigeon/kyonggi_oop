@@ -21,13 +21,13 @@ public class OutputView {
     }
 
     public static void printUserStatusMessage(UserStatusResponse userStatusResponse) {
-        String seatNumberStatus = "현재 " + userStatusResponse.getStudentId() + " 사용자가 ";
+        String seatNumberStatus = "\n<좌석 이용 현황>\n현재 " + userStatusResponse.getStudentId() + " 사용자가 ";
 
         if (!userStatusResponse.isUsingSeat()) {
-            seatNumberStatus = "좌석을 이용하고 있지 않습니다.";
+            seatNumberStatus += "좌석을 이용하고 있지 않습니다.";
         }
         if (userStatusResponse.isUsingSeat()) {
-            seatNumberStatus = userStatusResponse.getSeatNumber() + " 번 좌석 이용중입니다. (" +
+            seatNumberStatus += userStatusResponse.getSeatNumber() + " 번 좌석 이용중입니다. (" +
                     DateTimeFormatter.format(userStatusResponse.getSeatUsageStartTime()) + " ~ " +
                     DateTimeFormatter.format(userStatusResponse.getSeatUsageEndTime()) + ")";
         }

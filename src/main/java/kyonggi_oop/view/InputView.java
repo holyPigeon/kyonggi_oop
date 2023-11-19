@@ -12,6 +12,9 @@ public class InputView {
 
     }
 
+    /*
+     좌석 및 사용자 초기 데이터 입력 로직 임시 비활성
+     */
 //    public static List<Seat> readSeats() {
 //        System.out.println("좌석 데이터를 입력하고, 입력 종료 시에는 \"입력 종료\"를 입력합니다.");
 //
