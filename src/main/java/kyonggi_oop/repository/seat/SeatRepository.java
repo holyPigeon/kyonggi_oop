@@ -17,24 +17,19 @@ public class SeatRepository {
         return new SeatRepository(seats);
     }
 
-    // 데이터 직접 입력을 위한 임시 주석
-    //    public SeatManager() {
-//        init();
-//    }
-
-//    public void init() {
-//        List<Seat> seats = new ArrayList<>();
-//        for (int i = 1; i <= 10; i++) {
-//            seats.add(new Seat(i, RoomType.CREATIVE_FACTORY));
-//        }
-//        for (int i = 11; i <= 20; i++) {
-//            seats.add(new Seat(i, RoomType.ROOM_1));
-//        }
-//        for (int i = 21; i <= 30; i++) {
-//            seats.add(new Seat(i, RoomType.ROOM_2));
-//        }
-//        this.seats = seats;
-//    }
+    public void init() {
+        List<Seat> seats = new ArrayList<>();
+        for (int i = 1; i <= 10; i++) {
+            seats.add(Seat.create(i, RoomType.CREATIVE_FACTORY));
+        }
+        for (int i = 11; i <= 20; i++) {
+            seats.add(Seat.create(i, RoomType.ROOM_1));
+        }
+        for (int i = 21; i <= 30; i++) {
+            seats.add(Seat.create(i, RoomType.ROOM_2));
+        }
+        this.seats = seats;
+    }
 
     public Seat findBySeatNumber(int seatNumber) {
         return seats.stream()

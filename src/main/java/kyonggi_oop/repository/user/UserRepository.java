@@ -16,6 +16,16 @@ public class UserRepository {
         return new UserRepository(users);
     }
 
+    public void init() {
+        List<User> users = new ArrayList<>();
+        for (int i = 1; i <= 30; i++) {
+            String number = String.format("%02d", i);
+            UserRequest userRequest = UserRequest.of("2023000" + number, "abc0" + number);
+            users.add(User.create(userRequest));
+        }
+        this.users = users;
+    }
+
     public void add(User user) {
         users.add(user);
     }
