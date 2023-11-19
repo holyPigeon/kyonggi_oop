@@ -1,18 +1,19 @@
 package kyonggi_oop.domain.seat;
 
-import kyonggi_oop.domain.seat.RoomType;
-
 public class Seat {
 
-    private int number;
+    private final int number;
     private boolean isAvailable;
+    private final RoomType roomType;
 
-    private RoomType roomType;
-
-    public Seat(int number, RoomType roomType) {
+    private Seat(int number, RoomType roomType) {
         this.number = number;
         this.isAvailable = true;
         this.roomType = roomType;
+    }
+
+    public static Seat create(int number, RoomType roomType) {
+        return new Seat(number, roomType);
     }
 
     public int getNumber() {

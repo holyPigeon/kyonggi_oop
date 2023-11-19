@@ -1,6 +1,8 @@
 package kyonggi_oop.view;
 
 import kyonggi_oop.domain.seat.Seat;
+import kyonggi_oop.dto.response.UserStatusResponse;
+import kyonggi_oop.util.DateTimeFormatter;
 
 import java.util.List;
 
@@ -18,6 +20,21 @@ public class OutputView {
         System.out.println("로그인에 실패하였습니다.");
     }
 
+    public static void printUserStatusMessage(UserStatusResponse userStatusResponse) {
+        String seatNumberStatus = "\n<좌석 이용 현황>\n현재 " + userStatusResponse.getStudentId() + " 사용자가 ";
+
+        if (!userStatusResponse.isUsingSeat()) {
+            seatNumberStatus += "좌석을 이용하고 있지 않습니다.";
+        }
+        if (userStatusResponse.isUsingSeat()) {
+            seatNumberStatus += userStatusResponse.getSeatNumber() + " 번 좌석 이용중입니다. (" +
+                    DateTimeFormatter.format(userStatusResponse.getSeatUsageStartTime()) + " ~ " +
+                    DateTimeFormatter.format(userStatusResponse.getSeatUsageEndTime()) + ")";
+        }
+
+        System.out.println(seatNumberStatus);
+    }
+
     public static void printUseSeatMessage(List<Seat> seats) {
         System.out.println("1. 좌석 이용을 선택합니다.");
         System.out.println("이용하고자 하는 좌석 번호를 입력해주세요.");
@@ -32,7 +49,9 @@ public class OutputView {
     private static void printAvailableSeatsMessage(List<Seat> seats) {
         System.out.println();
         System.out.println("<이용 가능한 좌석 정보>");
-        seats.forEach(seat -> System.out.println("위치: " + seat.getRoomType().getName() + " / 번호: " + seat.getNumber()));
+        seats.forEach(seat ->
+                System.out.println("위치: " + seat.getRoomType().getName() + " / 번호: " + seat.getNumber())
+        );
     }
 
     public static void printChangeSeatMessage(List<Seat> seats) {
@@ -41,9 +60,8 @@ public class OutputView {
         printAvailableSeatsMessage(seats);
     }
 
-    public static void printSeatChangedMessage(int usedSeatNumber, int changeSeatNumber) {
-        System.out.println();
-        System.out.println(usedSeatNumber + "번 좌석에서 " + changeSeatNumber + "번 좌석으로 이동하였습니다." );
+    public static void printSeatChangedMessage(int changeSeatNumber) {
+        System.out.println(changeSeatNumber + "번 좌석으로 이동하였습니다." );
     }
 
     public static void printReturnSeatMessage() {

@@ -1,53 +1,71 @@
 package kyonggi_oop.controller;
 
-import kyonggi_oop.domain.user.UserManager;
-import kyonggi_oop.service.LibraryService;
 import kyonggi_oop.domain.seat.Seat;
 import kyonggi_oop.domain.user.User;
+import kyonggi_oop.service.LibraryService;
 import kyonggi_oop.service.LoginService;
 import kyonggi_oop.view.InputView;
 import kyonggi_oop.view.OutputView;
 
-import java.util.List;
-
 public class LibraryController {
+
+    LibraryService libraryService = LibraryService.getInstance();
 
     public void run() {
 
-        UserManager userManager = new UserManager(InputView.readUsers());
-        LoginService loginService = new LoginService(userManager);
-        List<Seat> seats = InputView.readSeats();
-
-        // 로그인
-        User user;
-        do {
-            user = InputView.readStudentIdAndPassword();
-            if (loginService.isRegisteredUser(user)) {
-                    OutputView.printLoginSuccessMessage();
-                    break;
-            }
-            OutputView.printLoginFailMessage();
-        } while(!loginService.isRegisteredUser(user));
-
-        LibraryService libraryService = new LibraryService(user, seats);
+        libraryService.login(tryLogin());
 
         int menu;
-        do {
-            menu = InputView.readMenu();
-            try {
-                switch (menu) {
-                    case 1 -> useSeat(libraryService);
-                    case 2 -> {
-                        user.getSeat();
-                        changeSeat(libraryService);
-                    }
-                    case 3 -> returnSeat(libraryService);
-                    case 4 -> logout();
-                }
-            } catch (Exception exception) {
-                System.out.println(exception.getMessage());
+        while ((menu = readMenu(libraryService)) != 4) {
+            selectMenuWithExceptionHandling(libraryService, menu);
+        }
+    }
+
+    /*
+    사용자 로그인
+     */
+    private static User tryLogin() {
+        LoginService loginService = LoginService.create();
+        User user;
+
+        while (true) {
+            user = new User(InputView.readStudentIdAndPassword());
+            if (loginService.isRegisteredUser(user)) {
+                OutputView.printLoginSuccessMessage();
+                break;
             }
-        } while (menu != 4);
+            OutputView.printLoginFailMessage();
+        }
+
+        return user;
+    }
+
+    /*
+    메뉴 입력값 입력
+     */
+    private static int readMenu(LibraryService libraryService) {
+        OutputView.printUserStatusMessage(libraryService.getUserStatusResponse());
+        return InputView.readMenu();
+    }
+
+    private void selectMenuWithExceptionHandling(LibraryService libraryService, int menu) {
+        try {
+            selectMenu(libraryService, menu);
+        } catch (Exception exception) {
+            System.out.println(exception.getMessage());
+        }
+    }
+
+    /*
+    메뉴 선택
+    */
+    private void selectMenu(LibraryService libraryService, int menu) {
+        switch (menu) {
+            case 1 -> useSeat(libraryService);
+            case 2 -> changeSeat(libraryService);
+            case 3 -> returnSeat(libraryService);
+            case 4 -> logout();
+        }
     }
 
     private void useSeat(LibraryService libraryService) {
@@ -55,20 +73,20 @@ public class LibraryController {
         Seat findSeat = libraryService.findSeatBySeatNumber(InputView.readSeatNumber());
         libraryService.useSeat(findSeat);
         OutputView.printSeatUsedMessage(findSeat.getNumber());
-
     }
 
     private void changeSeat(LibraryService libraryService) {
         OutputView.printChangeSeatMessage(libraryService.findAvailableSeats());
         Seat findSeat = libraryService.findSeatBySeatNumber(InputView.readSeatNumber());
-        Seat usedSeat = libraryService.changeSeat(findSeat);
-        OutputView.printSeatChangedMessage(usedSeat.getNumber(), findSeat.getNumber());
+        libraryService.changeSeat(findSeat);
+        OutputView.printSeatChangedMessage(findSeat.getNumber());
     }
 
     private void returnSeat(LibraryService libraryService) {
         OutputView.printReturnSeatMessage();
-        Seat usedSeat = libraryService.returnSeat();
-        OutputView.printSeatReturnedMessage(usedSeat.getNumber());
+        int usedSeatNumber = libraryService.getCurrentSeat().getNumber();
+        libraryService.returnSeat();
+        OutputView.printSeatReturnedMessage(usedSeatNumber);
     }
 
     private void logout() {
