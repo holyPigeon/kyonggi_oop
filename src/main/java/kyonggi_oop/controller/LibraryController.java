@@ -43,7 +43,8 @@ public class LibraryController {
     메뉴 입력값 입력
      */
     private static int readMenu(LibraryService libraryService) {
-        return InputView.readMenu(libraryService.getUserStatusResponse());
+        OutputView.printUserStatusMessage(libraryService.getUserStatusResponse());
+        return InputView.readMenu();
     }
 
     private void selectMenuWithExceptionHandling(LibraryService libraryService, int menu) {

@@ -7,12 +7,10 @@ import java.time.LocalDateTime;
 
 public class UserStatusResponse {
 
-    private String studentId;
-    private boolean isUsingSeat;
+    private final String studentId;
+    private final boolean isUsingSeat;
     private int seatNumber;
-
     private LocalDateTime seatUsageStartTime;
-
     private LocalDateTime seatUsageEndTime;
 
     private UserStatusResponse(User user, boolean isUsingSeat, SeatUsage seatUsage) {

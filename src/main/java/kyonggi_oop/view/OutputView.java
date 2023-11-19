@@ -1,6 +1,8 @@
 package kyonggi_oop.view;
 
 import kyonggi_oop.domain.seat.Seat;
+import kyonggi_oop.dto.response.UserStatusResponse;
+import kyonggi_oop.util.DateTimeFormatter;
 
 import java.util.List;
 
@@ -16,6 +18,21 @@ public class OutputView {
 
     public static void printLoginFailMessage() {
         System.out.println("로그인에 실패하였습니다.");
+    }
+
+    public static void printUserStatusMessage(UserStatusResponse userStatusResponse) {
+        String seatNumberStatus = "현재 " + userStatusResponse.getStudentId() + " 사용자가 ";
+
+        if (!userStatusResponse.isUsingSeat()) {
+            seatNumberStatus = "좌석을 이용하고 있지 않습니다.";
+        }
+        if (userStatusResponse.isUsingSeat()) {
+            seatNumberStatus = userStatusResponse.getSeatNumber() + " 번 좌석 이용중입니다. (" +
+                    DateTimeFormatter.format(userStatusResponse.getSeatUsageStartTime()) + " ~ " +
+                    DateTimeFormatter.format(userStatusResponse.getSeatUsageEndTime()) + ")";
+        }
+
+        System.out.println(seatNumberStatus);
     }
 
     public static void printUseSeatMessage(List<Seat> seats) {
@@ -44,7 +61,6 @@ public class OutputView {
     }
 
     public static void printSeatChangedMessage(int changeSeatNumber) {
-        System.out.println();
         System.out.println(changeSeatNumber + "번 좌석으로 이동하였습니다." );
     }
 

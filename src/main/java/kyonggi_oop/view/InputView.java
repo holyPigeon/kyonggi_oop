@@ -1,8 +1,6 @@
 package kyonggi_oop.view;
 
 import kyonggi_oop.dto.request.UserRequest;
-import kyonggi_oop.dto.response.UserStatusResponse;
-import kyonggi_oop.util.DateTimeFormatter;
 
 import java.util.Scanner;
 
@@ -46,28 +44,17 @@ public class InputView {
 //    }
 
     public static UserRequest readStudentIdAndPassword() {
-        System.out.println("학번과 비밀번호를 입력해주세요. (e.g. 202301234,abc123)");
+        System.out.println("학번과 비밀번호를 입력해주세요. (e.g. 202300001,abc001)");
         String input = scanner.next();
         String[] split = input.split(",");
         return UserRequest.of(split[0], split[1]);
     }
 
-    public static int readMenu(UserStatusResponse userStatusResponse) {
+    public static int readMenu() {
         System.out.println();
         System.out.println("<메뉴>");
         System.out.println("메뉴를 선택하세요.");
-        System.out.println("1. 좌석 이용   2.좌석 이동   3.좌석 반납   4.로그아웃");
-
-        String seatNumberStatus = "현재 " + userStatusResponse.getStudentId() + " 사용자가 ";
-        if (!userStatusResponse.isUsingSeat()) {
-            seatNumberStatus = "좌석을 이용하고 있지 않습니다.";
-        }
-        if (userStatusResponse.isUsingSeat()) {
-            seatNumberStatus = userStatusResponse.getSeatNumber() + " 번 좌석 이용중입니다. (" +
-                    DateTimeFormatter.format(userStatusResponse.getSeatUsageStartTime()) + " ~ " +
-                    DateTimeFormatter.format(userStatusResponse.getSeatUsageEndTime()) + ")";
-        }
-        System.out.println(seatNumberStatus);
+        System.out.println("1.좌석 이용   2.좌석 이동   3.좌석 반납   4.로그아웃");
 
         return Integer.parseInt(scanner.next());
     }
