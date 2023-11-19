@@ -10,20 +10,20 @@ import java.util.List;
 
 public class LibraryService {
 
-    SeatRepository seatRepository;
-    User user;
-    SeatUsage seatUsage;
+    private final SeatRepository seatRepository = SeatRepository.getInstance();
+    private User user;
+    private SeatUsage seatUsage;
 
-    private LibraryService(SeatRepository seatRepository) {
-        this.seatRepository = seatRepository;
+    private LibraryService() {
+
     }
 
-    public static LibraryService create(SeatRepository seatRepository) {
-        return new LibraryService(seatRepository);
+    public static LibraryService create() {
+        return new LibraryService();
     }
 
     public UserStatusResponse getUserStatusResponse() {
-        return UserStatusResponse.of(user, seatUsage);
+        return UserStatusResponse.of(user, isUsingSeat(), seatUsage);
     }
 
     public void login(User user) {
@@ -39,21 +39,21 @@ public class LibraryService {
     }
 
     public void changeSeat(Seat seat) {
-        if (isNotUsingSeat()) {
+        if (!isUsingSeat()) {
             throw new IllegalStateException("사용자가 좌석을 사용하고 있지 않습니다.");
         }
         this.seatUsage = SeatUsage.create(user, seat);
     }
 
     public Seat getCurrentSeat() {
-        if (isNotUsingSeat()) {
+        if (!isUsingSeat()) {
             throw new IllegalStateException("사용자가 좌석을 사용하고 있지 않습니다.");
         }
         return seatUsage.getSeat();
     }
 
-    private boolean isNotUsingSeat() {
-        return seatUsage == null;
+    private boolean isUsingSeat() {
+        return seatUsage != null;
     }
 
 

@@ -2,8 +2,6 @@ package kyonggi_oop.controller;
 
 import kyonggi_oop.domain.seat.Seat;
 import kyonggi_oop.domain.user.User;
-import kyonggi_oop.repository.seat.SeatRepository;
-import kyonggi_oop.repository.user.UserRepository;
 import kyonggi_oop.service.LibraryService;
 import kyonggi_oop.service.LoginService;
 import kyonggi_oop.view.InputView;
@@ -13,8 +11,7 @@ public class LibraryController {
 
     public void run() {
 
-        SeatRepository seatRepository = SeatRepository.create(InputView.readSeats());
-        LibraryService libraryService = LibraryService.create(seatRepository);
+        LibraryService libraryService = LibraryService.create();
         libraryService.login(tryLogin());
 
         int menu;
@@ -27,7 +24,7 @@ public class LibraryController {
     사용자 로그인
      */
     private static User tryLogin() {
-        LoginService loginService = prepareLoginService();
+        LoginService loginService = LoginService.create();
         User user;
 
         while (true) {
@@ -40,11 +37,6 @@ public class LibraryController {
         }
 
         return user;
-    }
-
-    private static LoginService prepareLoginService() {
-        UserRepository userRepository = UserRepository.create(InputView.readUsers());
-        return new LoginService(userRepository);
     }
 
     /*

@@ -1,36 +1,20 @@
 package kyonggi_oop.service;
 
 import kyonggi_oop.domain.user.User;
-import kyonggi_oop.dto.request.UserRequest;
 import kyonggi_oop.repository.user.UserRepository;
-import kyonggi_oop.view.OutputView;
 
 import java.util.function.Predicate;
 
 public class LoginService {
-    UserRepository userRepository;
 
-    public LoginService(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    private final UserRepository userRepository = UserRepository.getInstance();
+
+    private LoginService() {
+
     }
 
-    public static LoginService create(UserRepository userRepository) {
-        return new LoginService(userRepository);
-    }
-
-    public User tryLogin(UserRequest userRequest) {
-        User user;
-
-        while (true) {
-            user = new User(userRequest);
-            if (isRegisteredUser(user)) {
-                OutputView.printLoginSuccessMessage();
-                break;
-            }
-            OutputView.printLoginFailMessage();
-        }
-
-        return user;
+    public static LoginService create() {
+        return new LoginService();
     }
 
     public boolean isRegisteredUser(User user) {

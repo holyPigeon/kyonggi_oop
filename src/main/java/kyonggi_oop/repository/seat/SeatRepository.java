@@ -1,5 +1,6 @@
 package kyonggi_oop.repository.seat;
 
+import kyonggi_oop.domain.seat.RoomType;
 import kyonggi_oop.domain.seat.Seat;
 
 import java.util.ArrayList;
@@ -7,14 +8,15 @@ import java.util.List;
 
 public class SeatRepository {
 
+    private static final SeatRepository instance = new SeatRepository();
     private List<Seat> seats;
 
-    private SeatRepository(List<Seat> seats) {
-        this.seats = new ArrayList<>(seats);
+    private SeatRepository() {
+        init();
     }
 
-    public static SeatRepository create(List<Seat> seats) {
-        return new SeatRepository(seats);
+    public static SeatRepository getInstance() {
+        return instance;
     }
 
     public void init() {

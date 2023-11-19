@@ -1,19 +1,22 @@
 package kyonggi_oop.repository.user;
 
 import kyonggi_oop.domain.user.User;
+import kyonggi_oop.dto.request.UserRequest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserRepository {
 
-    private final List<User> users;
+    private static final UserRepository instance = new UserRepository();
+    private List<User> users;
 
-    private UserRepository(List<User> users) {
-        this.users = users;
+    private UserRepository() {
+        init();
     }
 
-    public static UserRepository create(List<User> users) {
-        return new UserRepository(users);
+    public static UserRepository getInstance() {
+        return instance;
     }
 
     public void init() {

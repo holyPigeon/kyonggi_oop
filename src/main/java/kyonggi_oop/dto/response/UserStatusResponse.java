@@ -8,25 +8,33 @@ import java.time.LocalDateTime;
 public class UserStatusResponse {
 
     private String studentId;
+    private boolean isUsingSeat;
     private int seatNumber;
 
     private LocalDateTime seatUsageStartTime;
 
     private LocalDateTime seatUsageEndTime;
 
-    private UserStatusResponse(User user, SeatUsage seatUsage) {
+    private UserStatusResponse(User user, boolean isUsingSeat, SeatUsage seatUsage) {
         this.studentId = user.getStudentId();
-        this.seatNumber = seatUsage.getSeat().getNumber();
-        this.seatUsageStartTime = seatUsage.getStartTime();
-        this.seatUsageEndTime = seatUsage.getEndTime();
+        this.isUsingSeat = isUsingSeat;
+        if (isUsingSeat) {
+            this.seatNumber = seatUsage.getSeat().getNumber();
+            this.seatUsageStartTime = seatUsage.getStartTime();
+            this.seatUsageEndTime = seatUsage.getEndTime();
+        }
     }
 
-    public static UserStatusResponse of(User user, SeatUsage seatUsage) {
-        return new UserStatusResponse(user, seatUsage);
+    public static UserStatusResponse of(User user, boolean isUsingSeat, SeatUsage seatUsage) {
+        return new UserStatusResponse(user, isUsingSeat, seatUsage);
     }
 
     public String getStudentId() {
         return studentId;
+    }
+
+    public boolean isUsingSeat() {
+        return isUsingSeat;
     }
 
     public int getSeatNumber() {
