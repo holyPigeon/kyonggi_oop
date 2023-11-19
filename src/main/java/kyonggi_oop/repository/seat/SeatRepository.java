@@ -46,6 +46,10 @@ public class SeatRepository {
                 .toList();
     }
 
+    public void updateSeatIsAvailable(Seat seat, boolean isAvailable) {
+        seat.setAvailable(isAvailable);
+    }
+
     public List<Seat> getSeats() {
         return new ArrayList<>(seats);
     }
