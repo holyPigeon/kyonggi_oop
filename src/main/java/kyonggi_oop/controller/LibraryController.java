@@ -5,7 +5,7 @@ import kyonggi_oop.domain.user.User;
 import kyonggi_oop.service.library.LibraryService;
 import kyonggi_oop.service.login.LoginService;
 import kyonggi_oop.view.InputView;
-import kyonggi_oop.view.OutputView;
+import kyonggi_oop.view.outputView.OutputView;
 
 public class LibraryController {
 

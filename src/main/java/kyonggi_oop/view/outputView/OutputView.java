@@ -1,4 +1,4 @@
-package kyonggi_oop.view;
+package kyonggi_oop.view.outputView;
 
 import kyonggi_oop.domain.seat.Seat;
 import kyonggi_oop.dto.response.UserStatusResponse;

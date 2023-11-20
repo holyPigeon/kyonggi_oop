@@ -1,10 +1,11 @@
-package kyonggi_oop.view;
+package kyonggi_oop.view.inputView;
 
 import kyonggi_oop.dto.request.UserRequest;
+import kyonggi_oop.view.InputView;
 
 import java.util.Scanner;
 
-public class ConsoleInputView implements InputView{
+public class ConsoleInputView implements InputView {
 
     private static final Scanner scanner = new Scanner(System.in);
 

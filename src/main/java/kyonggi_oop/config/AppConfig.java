@@ -9,10 +9,10 @@ import kyonggi_oop.service.library.LibraryService;
 import kyonggi_oop.service.library.LibraryServiceImpl;
 import kyonggi_oop.service.login.LoginService;
 import kyonggi_oop.service.login.LoginServiceImpl;
-import kyonggi_oop.view.ConsoleInputView;
-import kyonggi_oop.view.ConsoleOutputView;
+import kyonggi_oop.view.inputView.ConsoleInputView;
+import kyonggi_oop.view.outputView.ConsoleOutputView;
 import kyonggi_oop.view.InputView;
-import kyonggi_oop.view.OutputView;
+import kyonggi_oop.view.outputView.OutputView;
 
 public class AppConfig implements Config {
 
