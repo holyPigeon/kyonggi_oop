@@ -1,22 +1,23 @@
-package kyonggi_oop.service;
+package kyonggi_oop.service.login;
 
 import kyonggi_oop.domain.user.User;
 import kyonggi_oop.repository.user.UserRepository;
 
 import java.util.function.Predicate;
 
-public class LoginService {
+public class LoginServiceImpl implements LoginService{
 
-    private final UserRepository userRepository = UserRepository.getInstance();
+    private final UserRepository userRepository;
 
-    private LoginService() {
-
+    public LoginServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
-    public static LoginService create() {
-        return new LoginService();
+    public static LoginServiceImpl getInstance(UserRepository userRepository) {
+        return new LoginServiceImpl(userRepository);
     }
 
+    @Override
     public boolean isRegisteredUser(User user) {
         return userRepository.getUsers()
                 .stream()
