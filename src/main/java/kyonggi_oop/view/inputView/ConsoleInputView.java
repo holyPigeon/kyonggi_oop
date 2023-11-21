@@ -1,6 +1,7 @@
 package kyonggi_oop.view.inputView;
 
 import kyonggi_oop.dto.request.UserRequest;
+import kyonggi_oop.validator.InputValidator;
 
 import java.util.Scanner;
 
@@ -55,6 +56,9 @@ public class ConsoleInputView implements InputView {
         System.out.println("학번과 비밀번호를 입력해주세요. (e.g. 202300001,abc001)");
         String input = scanner.next();
         String[] split = input.split(",");
+        InputValidator.validateStudentIdInput(split[0]);
+        InputValidator.validatePasswordInput(split[1]);
+
         return UserRequest.of(split[0], split[1]);
     }
 
@@ -64,14 +68,18 @@ public class ConsoleInputView implements InputView {
         System.out.println("<메뉴>");
         System.out.println("메뉴를 선택하세요.");
         System.out.println("1.좌석 이용   2.좌석 이동   3.좌석 반납   4.로그아웃");
+        String input = scanner.next();
+        InputValidator.validateMenuInput(input);
 
-        return Integer.parseInt(scanner.next());
+        return Integer.parseInt(input);
     }
 
     @Override
     public int readSeatNumber() {
         System.out.println("이용할 좌석 번호를 입력해주세요.");
+        String input = scanner.next();
+        InputValidator.validateSeatNumberInput(input);
 
-        return Integer.parseInt(scanner.next());
+        return Integer.parseInt(input);
     }
 }

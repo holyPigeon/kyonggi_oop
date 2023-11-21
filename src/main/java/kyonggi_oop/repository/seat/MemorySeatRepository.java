@@ -45,7 +45,7 @@ public class MemorySeatRepository implements SeatRepository {
         return seats.stream()
                 .filter(seat -> seat.getNumber() == seatNumber)
                 .findAny()
-                .orElseThrow(() -> new IllegalStateException("존재하지 않는 좌석입니다."));
+                .orElseThrow(() -> new IllegalStateException("[ERROR] 존재하지 않는 좌석입니다."));
     }
 
     @Override

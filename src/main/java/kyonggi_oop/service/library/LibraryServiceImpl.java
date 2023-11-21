@@ -5,6 +5,7 @@ import kyonggi_oop.domain.seat.Seat;
 import kyonggi_oop.domain.user.User;
 import kyonggi_oop.dto.response.UserStatusResponse;
 import kyonggi_oop.repository.seat.SeatRepository;
+import kyonggi_oop.validator.SeatValidator;
 
 import java.util.List;
 
@@ -33,35 +34,26 @@ public class LibraryServiceImpl implements LibraryService {
     }
 
     @Override
-    public void useSeat(Seat seat) {
-        if (isUsingSeat()) {
-            throw new IllegalStateException("사용자가 좌석을 이미 이용하고 있습니다.");
-        }
-        if (!seat.isAvailable()) {
-            throw new IllegalStateException("이미 이용중인 좌석입니다.");
-        }
-        this.seatUsage = SeatUsage.create(user, seat);
-        seatRepository.updateSeatAvailability(seat, false);
+    public void useSeat(Seat selectedSeat) {
+        SeatValidator.validateWhenUsingSeat(seatUsage, selectedSeat);
+        this.seatUsage = SeatUsage.create(user, selectedSeat);
+        seatRepository.updateSeatAvailability(selectedSeat, false);
+    }
+
+    @Override
+    public void changeSeat(Seat selectedSeat) {
+        SeatValidator.validateWhenChangingSeat(selectedSeat);
+        seatRepository.updateSeatAvailability(getCurrentSeat(), true);
+        this.seatUsage = SeatUsage.create(user, selectedSeat);
+        seatRepository.updateSeatAvailability(selectedSeat, false);
     }
 
     @Override
     public void returnSeat() {
-        if (!isUsingSeat()) {
-            throw new IllegalStateException("사용자가 좌석을 이용하고 있지 않습니다.");
-        }
+        SeatValidator.validateWhenReturningSeat(seatUsage);
         seatRepository.updateSeatAvailability(getCurrentSeat(), true);
         this.seatUsage = null;
 
-    }
-
-    @Override
-    public void changeSeat(Seat seat) {
-        if (!seat.isAvailable()) {
-            throw new IllegalStateException("이미 이용중인 좌석입니다.");
-        }
-        seatRepository.updateSeatAvailability(getCurrentSeat(), true);
-        this.seatUsage = SeatUsage.create(user, seat);
-        seatRepository.updateSeatAvailability(seat, false);
     }
 
     @Override
@@ -71,9 +63,7 @@ public class LibraryServiceImpl implements LibraryService {
 
     @Override
     public Seat getCurrentSeat() {
-        if (!isUsingSeat()) {
-            throw new IllegalStateException("사용자가 좌석을 이용하고 있지 않습니다.");
-        }
+        SeatValidator.validateWhenGettingSeat(seatUsage);
         return seatUsage.getSeat();
     }
 

@@ -4,7 +4,7 @@ import kyonggi_oop.domain.seat.Seat;
 import kyonggi_oop.domain.user.User;
 import kyonggi_oop.service.library.LibraryService;
 import kyonggi_oop.service.login.LoginService;
-import kyonggi_oop.view.InputView;
+import kyonggi_oop.view.inputView.InputView;
 import kyonggi_oop.view.outputView.OutputView;
 
 public class LibraryController {
@@ -73,17 +73,24 @@ public class LibraryController {
     */
     private void selectMenu(LibraryService libraryService, int menu) {
         switch (menu) {
-            case 1 -> useSeat(libraryService);
-            case 2 -> changeSeat(libraryService);
+            case 1 -> {
+                if (libraryService.isUsingSeat()) {
+                    throw new IllegalStateException("사용자가 좌석을 이미 이용하고 있습니다.");
+                }
+                useSeat(libraryService);
+            }
+            case 2 -> {
+                if (!libraryService.isUsingSeat()) {
+                    throw new IllegalStateException("사용자가 좌석을 이용하고 있지 않습니다.");
+                }
+                changeSeat(libraryService);
+            }
             case 3 -> returnSeat(libraryService);
             case 4 -> logout();
         }
     }
 
     private void useSeat(LibraryService libraryService) {
-        if (libraryService.isUsingSeat()) {
-            throw new IllegalStateException("사용자가 좌석을 이미 이용하고 있습니다.");
-        }
         outputView.printUseSeatMessage(libraryService.findAvailableSeats());
         Seat findSeat = libraryService.findSeatBySeatNumber(inputView.readSeatNumber());
         libraryService.useSeat(findSeat);
@@ -91,9 +98,6 @@ public class LibraryController {
     }
 
     private void changeSeat(LibraryService libraryService) {
-        if (!libraryService.isUsingSeat()) {
-            throw new IllegalStateException("사용자가 좌석을 이용하고 있지 않습니다.");
-        }
         outputView.printChangeSeatMessage(libraryService.findAvailableSeats());
         Seat findSeat = libraryService.findSeatBySeatNumber(inputView.readSeatNumber());
         libraryService.changeSeat(findSeat);
