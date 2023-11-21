@@ -1,4 +1,4 @@
-package kyonggi_oop.view;
+package kyonggi_oop.view.inputView;
 
 import kyonggi_oop.dto.request.UserRequest;
 

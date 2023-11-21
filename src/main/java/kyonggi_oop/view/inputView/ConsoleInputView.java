@@ -1,7 +1,6 @@
 package kyonggi_oop.view.inputView;
 
 import kyonggi_oop.dto.request.UserRequest;
-import kyonggi_oop.view.InputView;
 
 import java.util.Scanner;
 
