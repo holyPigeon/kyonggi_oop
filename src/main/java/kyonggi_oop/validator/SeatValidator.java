@@ -2,6 +2,7 @@ package kyonggi_oop.validator;
 
 import kyonggi_oop.domain.SeatUsage;
 import kyonggi_oop.domain.seat.Seat;
+import kyonggi_oop.exception.ErrorMessage;
 
 public class SeatValidator {
 
@@ -9,41 +10,23 @@ public class SeatValidator {
 
     }
 
-    public static void validateWhenGettingSeat(SeatUsage seatUsage) {
-        validateIsUserNotUsingSeat(seatUsage);
-    }
-
-    public static void validateWhenUsingSeat(SeatUsage seatUsage, Seat selectedSeat) {
-        validateIsUserAlreadyUsingSeat(seatUsage);
-        validateIsAlreadyUsingSeat(selectedSeat);
-    }
-
-    public static void validateWhenChangingSeat(Seat selectedSeat) {
-        validateIsAlreadyUsingSeat(selectedSeat);
-    }
-
-    public static void validateWhenReturningSeat(SeatUsage seatUsage) {
-        validateIsUserNotUsingSeat(seatUsage);
-    }
-
-    private static void validateIsAlreadyUsingSeat(Seat selectedSeat) {
+    public static void validateIsAlreadyUsingSeat(Seat selectedSeat) {
         if (!selectedSeat.isAvailable()) {
-            throw new IllegalStateException("[ERROR] 다른 사람이 이용중인 좌석입니다.");
+            throw new IllegalStateException(ErrorMessage.SELECTED_ALREADY_USING_SEAT.getMessage());
         }
     }
 
-    private static void validateIsUserAlreadyUsingSeat(SeatUsage seatUsage) {
+    public static void validateIsUserAlreadyUsingSeat(SeatUsage seatUsage) {
         if (isUsingSeat(seatUsage)) {
-            throw new IllegalStateException("[ERROR] 이미 좌석을 이용중입니다.");
+            throw new IllegalStateException(ErrorMessage.ALREADY_USING_SEAT.getMessage());
         }
     }
 
-    private static void validateIsUserNotUsingSeat(SeatUsage seatUsage) {
+    public static void validateIsSeatUsageExist(SeatUsage seatUsage) {
         if (!isUsingSeat(seatUsage)) {
-            throw new IllegalStateException("[ERROR] 현재 좌석을 이용하고 있지 않습니다.");
+            throw new IllegalStateException(ErrorMessage.SEAT_USAGE_DOES_NOT_EXIST.getMessage());
         }
     }
-
 
     private static boolean isUsingSeat(SeatUsage seatUsage) {
         return seatUsage != null;

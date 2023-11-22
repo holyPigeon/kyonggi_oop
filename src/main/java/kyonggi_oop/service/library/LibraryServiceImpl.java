@@ -29,29 +29,23 @@ public class LibraryServiceImpl implements LibraryService {
     }
 
     @Override
-    public void login(User user) {
-        this.user = user;
-    }
-
-    @Override
     public void useSeat(Seat selectedSeat) {
-        SeatValidator.validateWhenUsingSeat(seatUsage, selectedSeat);
+        SeatValidator.validateIsAlreadyUsingSeat(selectedSeat);
         this.seatUsage = SeatUsage.create(user, selectedSeat);
         seatRepository.updateSeatAvailability(selectedSeat, false);
     }
 
     @Override
     public void changeSeat(Seat selectedSeat) {
-        SeatValidator.validateWhenChangingSeat(selectedSeat);
-        seatRepository.updateSeatAvailability(getCurrentSeat(), true);
+        seatRepository.updateSeatAvailability(getCurrentSeatUsage().getSeat(), true);
         this.seatUsage = SeatUsage.create(user, selectedSeat);
         seatRepository.updateSeatAvailability(selectedSeat, false);
     }
 
     @Override
     public void returnSeat() {
-        SeatValidator.validateWhenReturningSeat(seatUsage);
-        seatRepository.updateSeatAvailability(getCurrentSeat(), true);
+        SeatValidator.validateIsSeatUsageExist(seatUsage);
+        seatRepository.updateSeatAvailability(getCurrentSeatUsage().getSeat(), true);
         this.seatUsage = null;
 
     }
@@ -62,9 +56,9 @@ public class LibraryServiceImpl implements LibraryService {
     }
 
     @Override
-    public Seat getCurrentSeat() {
-        SeatValidator.validateWhenGettingSeat(seatUsage);
-        return seatUsage.getSeat();
+    public SeatUsage getCurrentSeatUsage() {
+        SeatValidator.validateIsSeatUsageExist(seatUsage);
+        return seatUsage;
     }
 
     @Override
@@ -75,5 +69,10 @@ public class LibraryServiceImpl implements LibraryService {
     @Override
     public Seat findSeatBySeatNumber(int seatNumber) {
         return seatRepository.findBySeatNumber(seatNumber);
+    }
+
+    @Override
+    public void setUser(User user) {
+        this.user = user;
     }
 }

@@ -9,8 +9,6 @@ public interface OutputView {
 
     void printLoginSuccessMessage();
 
-    void printLoginFailMessage();
-
     void printUserStatusMessage(UserStatusResponse userStatusResponse);
 
     void printUseSeatMessage(List<Seat> seats);
@@ -24,4 +22,6 @@ public interface OutputView {
     void printReturnSeatMessage();
 
     void printSeatReturnedMessage(int usedSeatNumber);
+
+    void printLogoutMessage();
 }

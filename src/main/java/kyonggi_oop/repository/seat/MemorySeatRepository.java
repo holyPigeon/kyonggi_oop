@@ -2,6 +2,7 @@ package kyonggi_oop.repository.seat;
 
 import kyonggi_oop.domain.seat.RoomType;
 import kyonggi_oop.domain.seat.Seat;
+import kyonggi_oop.exception.ErrorMessage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +46,7 @@ public class MemorySeatRepository implements SeatRepository {
         return seats.stream()
                 .filter(seat -> seat.getNumber() == seatNumber)
                 .findAny()
-                .orElseThrow(() -> new IllegalStateException("[ERROR] 존재하지 않는 좌석입니다."));
+                .orElseThrow(() -> new IllegalStateException(ErrorMessage.NOT_EXISTING_SEAT.getMessage()));
     }
 
     @Override

@@ -53,6 +53,7 @@ public class ConsoleInputView implements InputView {
 
     @Override
     public UserRequest readStudentIdAndPassword() {
+        System.out.println();
         System.out.println("학번과 비밀번호를 입력해주세요. (e.g. 202300001,abc001)");
         String input = scanner.next();
         String[] split = input.split(",");

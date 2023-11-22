@@ -18,12 +18,7 @@ public class ConsoleOutputView implements OutputView {
 
     @Override
     public void printLoginSuccessMessage() {
-        System.out.println("로그인에 성공하였습니다.");
-    }
-
-    @Override
-    public void printLoginFailMessage() {
-        System.out.println("로그인에 실패하였습니다.");
+        System.out.println("로그인합니다.");
     }
 
     @Override
@@ -51,7 +46,6 @@ public class ConsoleOutputView implements OutputView {
 
     @Override
     public void printSeatUsedMessage(int usingSeatNumber) {
-        System.out.println();
         System.out.println(usingSeatNumber + "번 좌석 이용중입니다.");
     }
 
@@ -82,7 +76,11 @@ public class ConsoleOutputView implements OutputView {
 
     @Override
     public void printSeatReturnedMessage(int usedSeatNumber) {
-        System.out.println();
         System.out.println(usedSeatNumber + "번 좌석 반납되었습니다.");
+    }
+
+    @Override
+    public void printLogoutMessage() {
+        System.out.println("로그아웃합니다.");
     }
 }

@@ -1,5 +1,6 @@
 package kyonggi_oop.service.library;
 
+import kyonggi_oop.domain.SeatUsage;
 import kyonggi_oop.domain.seat.Seat;
 import kyonggi_oop.domain.user.User;
 import kyonggi_oop.dto.response.UserStatusResponse;
@@ -10,8 +11,6 @@ public interface LibraryService {
 
     UserStatusResponse getUserStatusResponse();
 
-    void login(User user);
-
     void useSeat(Seat seat);
 
     void returnSeat();
@@ -20,9 +19,11 @@ public interface LibraryService {
 
     List<Seat> findAvailableSeats();
 
-    Seat getCurrentSeat();
+    SeatUsage getCurrentSeatUsage();
 
     boolean isUsingSeat();
 
     Seat findSeatBySeatNumber(int seatNumber);
+
+    void setUser(User user);
 }

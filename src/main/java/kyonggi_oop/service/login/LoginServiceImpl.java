@@ -8,14 +8,32 @@ import java.util.function.Predicate;
 public class LoginServiceImpl implements LoginService{
 
     private final UserRepository userRepository;
+    private boolean isLoggedIn;
 
     public LoginServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
+        this.isLoggedIn = false;
     }
 
     public static LoginServiceImpl getInstance(UserRepository userRepository) {
         return new LoginServiceImpl(userRepository);
     }
+
+    @Override
+    public void login() {
+        isLoggedIn = true;
+    }
+
+    @Override
+    public void logout() {
+        isLoggedIn = false;
+    }
+
+    @Override
+    public boolean isLoggedIn() {
+        return isLoggedIn;
+    }
+
 
     @Override
     public boolean isRegisteredUser(User user) {
