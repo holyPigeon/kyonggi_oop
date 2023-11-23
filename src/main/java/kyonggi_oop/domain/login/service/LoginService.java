@@ -1,4 +1,4 @@
-package kyonggi_oop.service.login;
+package kyonggi_oop.domain.login.service;
 
 import kyonggi_oop.domain.user.User;
 

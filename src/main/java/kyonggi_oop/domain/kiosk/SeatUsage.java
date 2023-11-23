@@ -1,4 +1,4 @@
-package kyonggi_oop.domain;
+package kyonggi_oop.domain.kiosk;
 
 import kyonggi_oop.domain.seat.Seat;
 import kyonggi_oop.domain.user.User;

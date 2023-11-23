@@ -1,7 +1,7 @@
-package kyonggi_oop.service.login;
+package kyonggi_oop.domain.login.service;
 
 import kyonggi_oop.domain.user.User;
-import kyonggi_oop.repository.user.UserRepository;
+import kyonggi_oop.domain.user.repository.UserRepository;
 
 import java.util.function.Predicate;
 

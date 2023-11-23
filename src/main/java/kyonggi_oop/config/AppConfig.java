@@ -1,14 +1,14 @@
 package kyonggi_oop.config;
 
-import kyonggi_oop.controller.LibraryController;
-import kyonggi_oop.repository.seat.MemorySeatRepository;
-import kyonggi_oop.repository.seat.SeatRepository;
-import kyonggi_oop.repository.user.MemoryUserRepository;
-import kyonggi_oop.repository.user.UserRepository;
-import kyonggi_oop.service.library.LibraryService;
-import kyonggi_oop.service.library.LibraryServiceImpl;
-import kyonggi_oop.service.login.LoginService;
-import kyonggi_oop.service.login.LoginServiceImpl;
+import kyonggi_oop.controller.KioskController;
+import kyonggi_oop.domain.seat.repository.MemorySeatRepository;
+import kyonggi_oop.domain.seat.repository.SeatRepository;
+import kyonggi_oop.domain.user.repository.MemoryUserRepository;
+import kyonggi_oop.domain.user.repository.UserRepository;
+import kyonggi_oop.domain.kiosk.service.KioskService;
+import kyonggi_oop.domain.kiosk.service.KioskServiceImpl;
+import kyonggi_oop.domain.login.service.LoginService;
+import kyonggi_oop.domain.login.service.LoginServiceImpl;
 import kyonggi_oop.view.inputView.ConsoleInputView;
 import kyonggi_oop.view.inputView.InputView;
 import kyonggi_oop.view.outputView.ConsoleOutputView;
@@ -36,13 +36,13 @@ public class AppConfig implements Config {
     }
 
     @Override
-    public LibraryService libraryService() {
-        return LazyHolder.libraryService;
+    public KioskService kioskService() {
+        return LazyHolder.KIOSK_SERVICE;
     }
 
     @Override
-    public LibraryController libraryController() {
-        return LazyHolder.libraryController;
+    public KioskController kioskController() {
+        return LazyHolder.KIOSK_CONTROLLER;
     }
 
     private static class LazyHolder {
@@ -53,19 +53,19 @@ public class AppConfig implements Config {
         private static final SeatRepository seatRepository = createSeatRepository();
         private static final UserRepository userRepository = createUserRepository();
         private static final LoginService loginService = createLoginService();
-        private static final LibraryService libraryService = createLibraryService();
-        private static final LibraryController libraryController = createLibraryController();
+        private static final KioskService KIOSK_SERVICE = createKioskService();
+        private static final KioskController KIOSK_CONTROLLER = createKioskController();
 
-        private static LibraryController createLibraryController() {
-            return new LibraryController(inputView, outputView, loginService, libraryService);
+        private static KioskController createKioskController() {
+            return new KioskController(inputView, outputView, loginService, KIOSK_SERVICE);
         }
 
         private static LoginService createLoginService() {
             return LoginServiceImpl.getInstance(userRepository);
         }
 
-        private static LibraryService createLibraryService() {
-            return LibraryServiceImpl.getInstance(seatRepository);
+        private static KioskService createKioskService() {
+            return KioskServiceImpl.getInstance(seatRepository);
         }
 
         private static SeatRepository createSeatRepository() {

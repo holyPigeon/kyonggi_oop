@@ -1,6 +1,6 @@
 package kyonggi_oop.dto.response;
 
-import kyonggi_oop.domain.SeatUsage;
+import kyonggi_oop.domain.kiosk.SeatUsage;
 import kyonggi_oop.domain.user.User;
 
 import java.time.LocalDateTime;

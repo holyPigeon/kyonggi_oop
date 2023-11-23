@@ -1,6 +1,6 @@
 package kyonggi_oop.validator;
 
-import kyonggi_oop.domain.SeatUsage;
+import kyonggi_oop.domain.kiosk.SeatUsage;
 import kyonggi_oop.domain.seat.Seat;
 import kyonggi_oop.exception.ErrorMessage;
 

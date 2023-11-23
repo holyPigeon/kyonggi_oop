@@ -1,10 +1,10 @@
 package kyonggi_oop.config;
 
-import kyonggi_oop.controller.LibraryController;
-import kyonggi_oop.repository.seat.SeatRepository;
-import kyonggi_oop.repository.user.UserRepository;
-import kyonggi_oop.service.library.LibraryService;
-import kyonggi_oop.service.login.LoginService;
+import kyonggi_oop.controller.KioskController;
+import kyonggi_oop.domain.seat.repository.SeatRepository;
+import kyonggi_oop.domain.user.repository.UserRepository;
+import kyonggi_oop.domain.kiosk.service.KioskService;
+import kyonggi_oop.domain.login.service.LoginService;
 
 public interface Config {
 
@@ -14,7 +14,7 @@ public interface Config {
 
     LoginService loginService();
 
-    LibraryService libraryService();
+    KioskService kioskService();
 
-    LibraryController libraryController();
+    KioskController kioskController();
 }

@@ -1,30 +1,30 @@
 package kyonggi_oop.controller;
 
-import kyonggi_oop.domain.SeatUsage;
+import kyonggi_oop.domain.kiosk.SeatUsage;
 import kyonggi_oop.domain.seat.Seat;
 import kyonggi_oop.domain.user.User;
 import kyonggi_oop.exception.ErrorMessage;
-import kyonggi_oop.service.library.LibraryService;
-import kyonggi_oop.service.login.LoginService;
+import kyonggi_oop.domain.kiosk.service.KioskService;
+import kyonggi_oop.domain.login.service.LoginService;
 import kyonggi_oop.validator.SeatValidator;
 import kyonggi_oop.view.inputView.InputView;
 import kyonggi_oop.view.outputView.OutputView;
 
-public class LibraryController {
+public class KioskController {
 
     private final InputView inputView;
     private final OutputView outputView;
     private final LoginService loginService;
-    private final LibraryService libraryService;
+    private final KioskService kioskService;
 
-    public LibraryController(InputView inputView,
-                             OutputView outputView,
-                             LoginService loginService,
-                             LibraryService libraryService) {
+    public KioskController(InputView inputView,
+                           OutputView outputView,
+                           LoginService loginService,
+                           KioskService kioskService) {
         this.inputView = inputView;
         this.outputView = outputView;
         this.loginService = loginService;
-        this.libraryService = libraryService;
+        this.kioskService = kioskService;
     }
 
     public void run() {
@@ -32,7 +32,7 @@ public class LibraryController {
             try {
                 User user = tryLogin();
                 loginService.login();
-                libraryService.setUser(user);
+                kioskService.setUser(user);
 
                 while (loginService.isLoggedIn()) {
                     selectMenuWithExceptionHandling();
@@ -45,7 +45,7 @@ public class LibraryController {
 
     private void selectMenuWithExceptionHandling() {
         try {
-            selectMenu(libraryService, readMenu(libraryService));
+            selectMenu(kioskService, readMenu(kioskService));
         } catch (Exception exception) {
             System.out.println(exception.getMessage());
         }
@@ -67,18 +67,18 @@ public class LibraryController {
     /*
     메뉴 입력값 입력
      */
-    private int readMenu(LibraryService libraryService) {
-        outputView.printUserStatusMessage(libraryService.getUserStatusResponse());
+    private int readMenu(KioskService kioskService) {
+        outputView.printUserStatusMessage(kioskService.getUserStatusResponse());
         return inputView.readMenu();
     }
 
     /*
     메뉴 선택
     */
-    private void selectMenu(LibraryService libraryService, int menu) {
+    private void selectMenu(KioskService kioskService, int menu) {
         SeatUsage seatUsage;
         try {
-            seatUsage = libraryService.getCurrentSeatUsage();
+            seatUsage = kioskService.getCurrentSeatUsage();
         } catch (IllegalStateException exception) {
             seatUsage = null;
         }
@@ -86,38 +86,38 @@ public class LibraryController {
         switch (menu) {
             case 1 -> {
                 SeatValidator.validateIsUserAlreadyUsingSeat(seatUsage);
-                useSeat(libraryService);
+                useSeat(kioskService);
             }
             case 2 -> {
                 SeatValidator.validateIsSeatUsageExist(seatUsage);
-                changeSeat(libraryService);
+                changeSeat(kioskService);
             }
             case 3 -> {
                 SeatValidator.validateIsSeatUsageExist(seatUsage);
-                returnSeat(libraryService);
+                returnSeat(kioskService);
             }
             case 4 -> logout();
         }
     }
 
-    private void useSeat(LibraryService libraryService) {
-        outputView.printUseSeatMessage(libraryService.findAvailableSeats());
-        Seat findSeat = libraryService.findSeatBySeatNumber(inputView.readSeatNumber());
-        libraryService.useSeat(findSeat);
+    private void useSeat(KioskService kioskService) {
+        outputView.printUseSeatMessage(kioskService.findAvailableSeats());
+        Seat findSeat = kioskService.findSeatBySeatNumber(inputView.readSeatNumber());
+        kioskService.useSeat(findSeat);
         outputView.printSeatUsedMessage(findSeat.getNumber());
     }
 
-    private void changeSeat(LibraryService libraryService) {
-        outputView.printChangeSeatMessage(libraryService.findAvailableSeats());
-        Seat findSeat = libraryService.findSeatBySeatNumber(inputView.readSeatNumber());
-        libraryService.changeSeat(findSeat);
+    private void changeSeat(KioskService kioskService) {
+        outputView.printChangeSeatMessage(kioskService.findAvailableSeats());
+        Seat findSeat = kioskService.findSeatBySeatNumber(inputView.readSeatNumber());
+        kioskService.changeSeat(findSeat);
         outputView.printSeatChangedMessage(findSeat.getNumber());
     }
 
-    private void returnSeat(LibraryService libraryService) {
+    private void returnSeat(KioskService kioskService) {
         outputView.printReturnSeatMessage();
-        int usedSeatNumber = libraryService.getCurrentSeatUsage().getSeat().getNumber();
-        libraryService.returnSeat();
+        int usedSeatNumber = kioskService.getCurrentSeatUsage().getSeat().getNumber();
+        kioskService.returnSeat();
         outputView.printSeatReturnedMessage(usedSeatNumber);
     }
 

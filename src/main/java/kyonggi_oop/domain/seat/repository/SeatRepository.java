@@ -1,4 +1,4 @@
-package kyonggi_oop.repository.seat;
+package kyonggi_oop.domain.seat.repository;
 
 import kyonggi_oop.domain.seat.Seat;
 

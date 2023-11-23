@@ -1,4 +1,4 @@
-package kyonggi_oop.repository.user;
+package kyonggi_oop.domain.user.repository;
 
 import kyonggi_oop.domain.user.User;
 import kyonggi_oop.dto.request.UserRequest;
