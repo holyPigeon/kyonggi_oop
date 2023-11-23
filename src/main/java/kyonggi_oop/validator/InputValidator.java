@@ -47,7 +47,7 @@ public class InputValidator {
     }
 
     private static boolean isRightFormat(String input) {
-        String regex = ErrorMessage.PASSWORD_INPUT_REGEX.getMessage(); // 영어와 숫자를 각각 한 개 이상 포함한다.
+        String regex = ErrorMessage.PASSWORD_INPUT_REGEX.getRegEx(); // 영어와 숫자를 각각 한 개 이상 포함한다.
         return Pattern.compile(regex)
                 .matcher(input)
                 .matches();
