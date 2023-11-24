@@ -1,19 +1,21 @@
 package kyonggi_oop.domain.seat;
 
+import kyonggi_oop.controller.dto.request.SeatRequest;
+
 public class Seat {
 
     private final int number;
     private boolean isAvailable;
     private final RoomType roomType;
 
-    private Seat(int number, RoomType roomType) {
-        this.number = number;
+    private Seat(SeatRequest seatRequest) {
+        this.number = seatRequest.getNumber();
         this.isAvailable = true;
-        this.roomType = roomType;
+        this.roomType = seatRequest.getRoomType();
     }
 
-    public static Seat create(int number, RoomType roomType) {
-        return new Seat(number, roomType);
+    public static Seat create(SeatRequest seatRequest) {
+        return new Seat(seatRequest);
     }
 
     public int getNumber() {

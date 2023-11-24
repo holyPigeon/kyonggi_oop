@@ -1,11 +1,13 @@
 package kyonggi_oop.domain.login.service;
 
+import kyonggi_oop.controller.dto.request.UserLoginRequest;
 import kyonggi_oop.domain.user.User;
 import kyonggi_oop.domain.user.repository.UserRepository;
+import kyonggi_oop.exception.ErrorMessage;
 
 import java.util.function.Predicate;
 
-public class LoginServiceImpl implements LoginService{
+public class LoginServiceImpl implements LoginService {
 
     private final UserRepository userRepository;
     private boolean isLoggedIn;
@@ -20,7 +22,16 @@ public class LoginServiceImpl implements LoginService{
     }
 
     @Override
-    public void login() {
+    public User tryLogin(UserLoginRequest userLoginRequest) {
+        if (!isRegisteredUser(userLoginRequest)) {
+            throw new IllegalStateException(ErrorMessage.LOGIN_FAILED.getMessage());
+        }
+        login();
+
+        return userRepository.findByStudentId(userLoginRequest.getStudentId());
+    }
+
+    private void login() {
         isLoggedIn = true;
     }
 
@@ -34,23 +45,25 @@ public class LoginServiceImpl implements LoginService{
         return isLoggedIn;
     }
 
-
     @Override
-    public boolean isRegisteredUser(User user) {
+    public boolean isRegisteredUser(UserLoginRequest userLoginRequest) {
         return userRepository.getUsers()
                 .stream()
-                .anyMatch(isStudentIdAndPasswordAllMatch(user));
+                .anyMatch(isStudentIdAndPasswordAllMatch(
+                        userLoginRequest.getStudentId(),
+                        userLoginRequest.getPassword())
+                );
     }
 
-    private static Predicate<User> isStudentIdAndPasswordAllMatch(User user) {
-        return savedUser -> isStudentIdMatch(user, savedUser) && isPasswordMatch(user, savedUser);
+    private static Predicate<User> isStudentIdAndPasswordAllMatch(String studentId, String password) {
+        return savedUser -> isStudentIdMatch(studentId, savedUser) && isPasswordMatch(password, savedUser);
     }
 
-    private static boolean isPasswordMatch(User user, User savedUser) {
-        return savedUser.getPassword().equals(user.getPassword());
+    private static boolean isPasswordMatch(String password, User savedUser) {
+        return savedUser.getPassword().equals(password);
     }
 
-    private static boolean isStudentIdMatch(User user, User savedUser) {
-        return savedUser.getStudentId().equals(user.getStudentId());
+    private static boolean isStudentIdMatch(String studentId, User savedUser) {
+        return savedUser.getStudentId().equals(studentId);
     }
 }

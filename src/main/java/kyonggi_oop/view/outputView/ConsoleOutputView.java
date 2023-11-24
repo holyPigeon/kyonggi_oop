@@ -1,8 +1,9 @@
 package kyonggi_oop.view.outputView;
 
+import kyonggi_oop.controller.dto.response.UserStatusResponse;
 import kyonggi_oop.domain.seat.Seat;
-import kyonggi_oop.dto.response.UserStatusResponse;
-import kyonggi_oop.util.DateTimeFormatter;
+import kyonggi_oop.domain.user.User;
+import kyonggi_oop.view.util.DateTimeFormatter;
 
 import java.util.List;
 
@@ -54,6 +55,25 @@ public class ConsoleOutputView implements OutputView {
         System.out.println("<이용 가능한 좌석 정보>");
         seats.forEach(seat ->
                 System.out.println("위치: " + seat.getRoomType().getName() + " / 번호: " + seat.getNumber())
+        );
+    }
+
+    @Override
+    public void printAllSeatsMessage(List<Seat> seats) {
+        System.out.println();
+        System.out.println("<전체 좌석>");
+        seats.forEach(seat ->
+                System.out.println("위치: " + seat.getRoomType().getName() + " / 번호: " + seat.getNumber())
+        );
+    }
+
+    @Override
+    public void printAllUsersMessage(List<User> users) {
+        System.out.println();
+        System.out.println("<전체 사용자>");
+        users.forEach(user ->
+                System.out.println("학번: " + user.getStudentId() + " / 비밀번호: " + user.getPassword() +
+                        " / 권한: " + user.getRole().getName())
         );
     }
 

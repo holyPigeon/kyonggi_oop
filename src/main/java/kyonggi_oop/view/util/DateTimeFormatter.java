@@ -1,4 +1,4 @@
-package kyonggi_oop.util;
+package kyonggi_oop.view.util;
 
 import java.time.LocalDateTime;
 

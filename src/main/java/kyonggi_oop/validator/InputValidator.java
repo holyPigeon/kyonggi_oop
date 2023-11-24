@@ -56,14 +56,26 @@ public class InputValidator {
     /*
     메뉴 입력값 검증
      */
-    public static void validateMenuInput(String input) {
+    public static void validateMenuInputForStudent(String input) {
         validateIsBlank(input);
         validateIsDigit(input);
-        validateIsMenuInputInRange(input);
+        validateIsMenuInputForStudentInRange(input);
     }
 
-    private static void validateIsMenuInputInRange(String input) {
+    public static void validateMenuInputForAdmin(String input) {
+        validateIsBlank(input);
+        validateIsDigit(input);
+        validateIsMenuInputForAdminInRange(input);
+    }
+
+    private static void validateIsMenuInputForStudentInRange(String input) {
         if (Integer.parseInt(input) < 1 || Integer.parseInt(input) > 4) {
+            throw new IllegalArgumentException(ErrorMessage.MENU_INPUT_IS_NOT_IN_RANGE.getMessage());
+        }
+    }
+
+    private static void validateIsMenuInputForAdminInRange(String input) {
+        if (Integer.parseInt(input) < 1 || Integer.parseInt(input) > 5) {
             throw new IllegalArgumentException(ErrorMessage.MENU_INPUT_IS_NOT_IN_RANGE.getMessage());
         }
     }

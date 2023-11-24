@@ -1,14 +1,16 @@
 package kyonggi_oop.controller;
 
 import kyonggi_oop.domain.kiosk.SeatUsage;
-import kyonggi_oop.domain.seat.Seat;
-import kyonggi_oop.domain.user.User;
-import kyonggi_oop.exception.ErrorMessage;
 import kyonggi_oop.domain.kiosk.service.KioskService;
 import kyonggi_oop.domain.login.service.LoginService;
+import kyonggi_oop.domain.seat.Seat;
+import kyonggi_oop.domain.user.Role;
+import kyonggi_oop.domain.user.User;
 import kyonggi_oop.validator.SeatValidator;
 import kyonggi_oop.view.inputView.InputView;
 import kyonggi_oop.view.outputView.OutputView;
+
+import java.util.List;
 
 public class KioskController {
 
@@ -31,11 +33,10 @@ public class KioskController {
         while (!loginService.isLoggedIn()) {
             try {
                 User user = tryLogin();
-                loginService.login();
                 kioskService.setUser(user);
 
                 while (loginService.isLoggedIn()) {
-                    selectMenuWithExceptionHandling();
+                    selectMenuWithExceptionHandling(user);
                 }
             } catch (Exception exception) {
                 System.out.println(exception.getMessage());
@@ -43,9 +44,18 @@ public class KioskController {
         }
     }
 
-    private void selectMenuWithExceptionHandling() {
+    private void selectMenuWithExceptionHandling(User user) {
         try {
-            selectMenu(kioskService, readMenu(kioskService));
+            if (user.getRole().equals(Role.STUDENT)) {
+                outputView.printUserStatusMessage(kioskService.getUserStatusResponse());
+                int menu = inputView.readMenuForStudent();
+                selectMenuForStudent(kioskService, menu);
+            }
+            if (user.getRole().equals(Role.ADMIN)) {
+                int menu = inputView.readMenuForAdmin();
+                selectMenuForAdmin(menu);
+            }
+
         } catch (Exception exception) {
             System.out.println(exception.getMessage());
         }
@@ -55,27 +65,15 @@ public class KioskController {
     사용자 로그인
      */
     private User tryLogin() {
-        User user = new User(inputView.readStudentIdAndPassword());
-        if (!loginService.isRegisteredUser(user)) {
-            throw new IllegalStateException(ErrorMessage.LOGIN_FAILED.getMessage());
-        }
+        User user = loginService.tryLogin(inputView.readStudentIdAndPassword());
         outputView.printLoginSuccessMessage();
-
         return user;
-    }
-
-    /*
-    메뉴 입력값 입력
-     */
-    private int readMenu(KioskService kioskService) {
-        outputView.printUserStatusMessage(kioskService.getUserStatusResponse());
-        return inputView.readMenu();
     }
 
     /*
     메뉴 선택
     */
-    private void selectMenu(KioskService kioskService, int menu) {
+    private void selectMenuForStudent(KioskService kioskService, int menu) {
         SeatUsage seatUsage;
         try {
             seatUsage = kioskService.getCurrentSeatUsage();
@@ -119,6 +117,34 @@ public class KioskController {
         int usedSeatNumber = kioskService.getCurrentSeatUsage().getSeat().getNumber();
         kioskService.returnSeat();
         outputView.printSeatReturnedMessage(usedSeatNumber);
+    }
+
+    private void selectMenuForAdmin(int menu) {
+        switch (menu) {
+            case 1 -> viewSeats();
+            case 2 -> viewUsers();
+            case 3 -> addSeats();
+            case 4 -> addUsers();
+            case 5 -> logout();
+        }
+    }
+
+    private void viewSeats() {
+        outputView.printAllSeatsMessage(kioskService.findAllSeats());
+    }
+
+    private void viewUsers() {
+        outputView.printAllUsersMessage(kioskService.findAllUsers());
+    }
+
+    private void addSeats() {
+        List<Seat> seats = inputView.readSeatRequests();
+        kioskService.addSeats(seats);
+    }
+
+    private void addUsers() {
+        List<User> users = inputView.readUserJoinRequests();
+        kioskService.addUsers(users);
     }
 
     private void logout() {

@@ -4,9 +4,8 @@ import java.util.Arrays;
 
 public enum RoomType {
     CREATIVE_FACTORY("창의 팩토리"),
-    ROOM_1("제 1열람실"),
-    ROOM_2("제 2열람실"),
-    NONE("없음");
+    ROOM_1("제1열람실"),
+    ROOM_2("제2열람실");
 
     private final String name;
 
@@ -18,7 +17,7 @@ public enum RoomType {
         return Arrays.stream(values())
                 .filter(room -> room.name.equals(name))
                 .findAny()
-                .orElse(RoomType.NONE);
+                .orElseThrow(() -> new IllegalStateException("존재하지 않는 열람실입니다."));
     }
 
     public String getName() {

@@ -1,4 +1,4 @@
-package kyonggi_oop.dto.response;
+package kyonggi_oop.controller.dto.response;
 
 import kyonggi_oop.domain.kiosk.SeatUsage;
 import kyonggi_oop.domain.user.User;

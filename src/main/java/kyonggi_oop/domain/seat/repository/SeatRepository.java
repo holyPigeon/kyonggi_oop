@@ -8,6 +8,10 @@ public interface SeatRepository {
 
     void init();
 
+    void addSeat(Seat seat);
+
+    List<Seat> findAll();
+
     List<Seat> findAvailableSeats();
 
     Seat findBySeatNumber(int seatNumber);

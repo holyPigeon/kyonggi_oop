@@ -1,7 +1,7 @@
 package kyonggi_oop.domain.user.repository;
 
+import kyonggi_oop.controller.dto.request.UserJoinRequest;
 import kyonggi_oop.domain.user.User;
-import kyonggi_oop.dto.request.UserRequest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,16 +21,17 @@ public class MemoryUserRepository implements UserRepository{
     @Override
     public void init() {
         List<User> users = new ArrayList<>();
-        for (int i = 1; i <= 30; i++) {
+            users.add(User.create(UserJoinRequest.of("202300001", "abc001", "관리자"))); // 관리자 계정 추가
+        for (int i = 2; i <= 30; i++) {
             String number = String.format("%02d", i);
-            UserRequest userRequest = UserRequest.of("2023000" + number, "abc0" + number);
-            users.add(User.create(userRequest));
+            UserJoinRequest userJoinRequest = UserJoinRequest.of("2023000" + number, "abc0" + number, "학생");
+            users.add(User.create(userJoinRequest));
         }
         this.users = users;
     }
 
     @Override
-    public void add(User user) {
+    public void addUser(User user) {
         users.add(user);
     }
 
@@ -38,6 +39,11 @@ public class MemoryUserRepository implements UserRepository{
     public void removeByStudentId(String studentId) {
         User findUser = findByStudentId(studentId);
         users.remove(findUser);
+    }
+
+    @Override
+    public List<User> findAll() {
+        return users;
     }
 
     @Override

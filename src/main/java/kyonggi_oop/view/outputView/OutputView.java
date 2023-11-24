@@ -1,7 +1,8 @@
 package kyonggi_oop.view.outputView;
 
 import kyonggi_oop.domain.seat.Seat;
-import kyonggi_oop.dto.response.UserStatusResponse;
+import kyonggi_oop.controller.dto.response.UserStatusResponse;
+import kyonggi_oop.domain.user.User;
 
 import java.util.List;
 
@@ -14,6 +15,10 @@ public interface OutputView {
     void printUseSeatMessage(List<Seat> seats);
 
     void printSeatUsedMessage(int usingSeatNumber);
+
+    void printAllSeatsMessage(List<Seat> seats);
+
+    void printAllUsersMessage(List<User> users);
 
     void printChangeSeatMessage(List<Seat> seats);
 

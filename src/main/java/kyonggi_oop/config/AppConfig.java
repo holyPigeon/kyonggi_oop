@@ -65,7 +65,7 @@ public class AppConfig implements Config {
         }
 
         private static KioskService createKioskService() {
-            return KioskServiceImpl.getInstance(seatRepository);
+            return KioskServiceImpl.getInstance(seatRepository, userRepository);
         }
 
         private static SeatRepository createSeatRepository() {

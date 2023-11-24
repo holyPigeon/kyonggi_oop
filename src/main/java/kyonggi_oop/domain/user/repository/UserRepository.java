@@ -8,9 +8,11 @@ public interface UserRepository {
 
     void init();
 
-    void add(User user);
+    void addUser(User user);
 
     void removeByStudentId(String studentId);
+
+    List<User> findAll();
 
     User findByStudentId(String studentId);
 
